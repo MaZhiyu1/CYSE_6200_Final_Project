@@ -14,6 +14,7 @@ public class Main extends Application {
 	private WeightTracker weightTracker = new WeightTracker();
 
 	@Override
+	//Adam check
 	public void start(Stage primaryStage) {
 		primaryStage.setTitle("Weight Track System");
 
