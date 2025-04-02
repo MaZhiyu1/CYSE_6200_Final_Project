@@ -1,5 +1,5 @@
 package application;
-
+// 1) Class Definition
 public abstract class GeneralUser {
 	protected String name;
 	protected int age;

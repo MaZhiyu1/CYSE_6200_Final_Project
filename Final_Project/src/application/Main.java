@@ -1,8 +1,11 @@
 package application;
-//Adam Check 2
+
+import java.util.concurrent.atomic.AtomicReference;
 
 import javafx.application.Application;
 import javafx.scene.Scene;
+import javafx.scene.chart.LineChart;
+import javafx.scene.chart.NumberAxis;
 import javafx.scene.control.Button;
 import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.Label;
@@ -15,7 +18,6 @@ public class Main extends Application {
 	private WeightTracker weightTracker = new WeightTracker();
 
 	@Override
-	//Adam check
 	public void start(Stage primaryStage) {
 		primaryStage.setTitle("Weight Track System");
 
@@ -42,6 +44,13 @@ public class Main extends Application {
 		Button logWeightButton = new Button("Log Weight");
 		ListView<Double> weightHistoryList = new ListView<>();
 
+		//Layout + empty placeholder for replacement of weight tracker chart
+		VBox layout = new VBox(10, nameLabel, nameField, ageLabel, ageField, genderLabel, genderBox, heightLabel,
+	                heightField, weightLabel, weightField, calculateBMIButton, bmiResultLabel, logWeightButton, weightHistoryList);
+	    Scene scene = new Scene(layout, 1000, 1000);
+        AtomicReference<LineChart<Number, Number>> placeHolder = new AtomicReference<>(new LineChart<>(new NumberAxis(), new NumberAxis()));
+        layout.getChildren().add(placeHolder.get());
+	        
 		calculateBMIButton.setOnAction(e -> {
 			try {
 				double height = Double.parseDouble(heightField.getText());
@@ -59,15 +68,17 @@ public class Main extends Application {
 				double weight = Double.parseDouble(weightField.getText());
 				weightTracker.logWeight(weight);
 				weightHistoryList.getItems().setAll(weightTracker.getWeightHistory());
+				
+				//updates placeholder chart with new one everytime a weight value is inputted 
+				LineChart<Number, Number> update = new WeightProgressTracker().weightChart(weightTracker.getWeightHistory());
+                layout.getChildren().remove(placeHolder.get());
+                layout.getChildren().add(update);		
+                placeHolder.set(update);
+				
 			} catch (NumberFormatException ex) {
 				bmiResultLabel.setText("Invalid weight input!");
 			}
 		});
-
-		VBox layout = new VBox(10, nameLabel, nameField, ageLabel, ageField, genderLabel, genderBox, heightLabel,
-				heightField, weightLabel, weightField, calculateBMIButton, bmiResultLabel, logWeightButton,
-				weightHistoryList);
-		Scene scene = new Scene(layout, 300, 500);
 
 		primaryStage.setScene(scene);
 		primaryStage.show();
