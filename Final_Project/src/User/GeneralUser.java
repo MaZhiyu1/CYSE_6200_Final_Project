@@ -1,5 +1,7 @@
-package application;
+package User;
+
 // 1) Class Definition
+// 3) Abstract Classes/Interfaces
 public abstract class GeneralUser {
 	protected String name;
 	protected int age;
