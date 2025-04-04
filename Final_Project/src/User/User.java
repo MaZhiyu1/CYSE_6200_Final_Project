@@ -1,4 +1,4 @@
-package application;
+package User;
 //2) Inheritance/Polymorphism
 
 public class User extends GeneralUser {
