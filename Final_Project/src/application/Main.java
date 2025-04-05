@@ -1,10 +1,7 @@
 package application;
 
 import java.util.concurrent.atomic.AtomicReference;
-import Tracker.BMIChartBuilder;
-import Tracker.BMITracker;
-import User.BMIRecord;
-import User.User;
+
 import javafx.application.Application;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.geometry.Insets;
@@ -15,6 +12,16 @@ import javafx.scene.control.*;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
+
+import tracker.BMIChartBuilder;
+import tracker.BMITracker;
+import user.BMIRecord;
+import user.User;
+
+import handler.CalculateBMIHandler;
+import handler.LogRecordHandler;
+import handler.EditRecordHandler;
+import handler.DeleteRecordHandler;
 
 public class Main extends Application {
 	private BMITracker bmiTracker = new BMITracker();
@@ -45,6 +52,8 @@ public class Main extends Application {
 		bmiResultLabel.setStyle("-fx-font-size: 16px; -fx-text-fill: #0066cc; -fx-font-weight: bold;");
 
 		Button logRecordButton = new Button("Add & Print Record");
+		Button editRecordButton = new Button("Edit Record");
+		Button deleteRecordButton = new Button("Delete Record");
 
 		// Table to display BMI records
 		TableView<BMIRecord> recordTable = new TableView<>();
@@ -78,7 +87,7 @@ public class Main extends Application {
 		row3.setPadding(new Insets(5, 0, 5, 0));
 
 		// Group Log Button
-		HBox row4 = new HBox(15, logRecordButton);
+		HBox row4 = new HBox(15, logRecordButton, editRecordButton, deleteRecordButton);
 		row4.setPadding(new Insets(5, 0, 5, 0));
 
 		// Layout + empty placeholder for replacement of weight tracker chart
@@ -94,87 +103,21 @@ public class Main extends Application {
 		layout.getChildren().add(placeHolder.get());
 
 		// BMI Calculation Logic
-		calculateBMIButton.setOnAction(e -> {
-			String heightText = heightField.getText();
-			String weightText = weightField.getText();
-
-			if (heightText.isEmpty() || weightText.isEmpty()) {
-				showAlert(Alert.AlertType.ERROR, "Missing Input", "Please enter height and weight.");
-				bmiResultLabel.setText("Missing input!");
-				return;
-			}
-
-			try {
-				double height = Double.parseDouble(heightText);
-				double weight = Double.parseDouble(weightText);
-
-				if (height <= 0 || weight <= 0) {
-					showAlert(Alert.AlertType.ERROR, "Invalid Input", "Height and weight must be positive.");
-					bmiResultLabel.setText("Invalid input!");
-					return;
-				}
-
-				double bmi = weight / Math.pow(height / 100.0, 2);
-				bmiResultLabel.setText("Your BMI: " + String.format("%.2f", bmi));
-
-			} catch (NumberFormatException ex) {
-				showAlert(Alert.AlertType.ERROR, "Invalid Format", "Please enter valid numeric values.");
-				bmiResultLabel.setText("Invalid format!");
-			}
-		});
+		calculateBMIButton.setOnAction(new CalculateBMIHandler(heightField, weightField, bmiResultLabel));
 
 		// Log BMI record and print Record in table and chart
-		logRecordButton.setOnAction(e -> {
-			try {
-				String name = nameField.getText();
-				String ageText = ageField.getText();
-				String gender = genderBox.getValue();
-				String heightText = heightField.getText();
-				String weightText = weightField.getText();
+		logRecordButton.setOnAction(new LogRecordHandler(
+			nameField, ageField, genderBox, heightField, weightField,
+			recordTable, layout, placeHolder, bmiTracker
+		));
+		
+		// Updates selected BMI record
+		editRecordButton.setOnAction(new EditRecordHandler(recordTable, bmiTracker, layout, placeHolder));
 
-				// Check completeness
-				if (name.isEmpty() || ageText.isEmpty() || gender == null || heightText.isEmpty() || weightText.isEmpty()) {
-					showAlert(Alert.AlertType.ERROR, "Missing Input", "Please complete all fields.");
-					return;
-				}
-
-				int age = Integer.parseInt(ageText);
-				double height = Double.parseDouble(heightText);
-				double weight = Double.parseDouble(weightText);
-
-				if (age <= 0 || height <= 0 || weight <= 0) {
-					showAlert(Alert.AlertType.ERROR, "Invalid Input", "All values must be greater than 0.");
-					return;
-				}
-
-				// Add to record tracker
-				User user = new User(name, age, gender, height, weight);
-				bmiTracker.logRecord(user);
-
-				// Update table and chart
-				recordTable.getItems().setAll(bmiTracker.getRecordHistory());
-
-				LineChart<Number, Number> update = new BMIChartBuilder().bmiChart(bmiTracker.getRecordHistory());
-				layout.getChildren().remove(placeHolder.get());
-				layout.getChildren().add(update);
-				placeHolder.set(update);
-
-			} catch (NumberFormatException ex) {
-				showAlert(Alert.AlertType.ERROR, "Format Error", "Please enter valid numbers.");
-			}
-		});
-
+		// Removes selected BMI record
+		deleteRecordButton.setOnAction(new DeleteRecordHandler(recordTable, bmiTracker, layout, placeHolder));
 		primaryStage.setScene(scene);
 		primaryStage.show();
-	}
-
-	/** Utility method to display an alert dialog with a given type, title, and message. **/
-	private void showAlert(Alert.AlertType type, String title, String message) {
-		Alert alert = new Alert(type);
-		alert.setTitle(title);
-		alert.setHeaderText(null);
-		alert.setContentText(message);
-		alert.showAndWait();
 	}
 
 	public static void main(String[] args) {

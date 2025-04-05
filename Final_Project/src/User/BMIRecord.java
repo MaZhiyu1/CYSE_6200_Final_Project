@@ -1,4 +1,4 @@
-package User;
+package user;
 
 //1) Class Definition
 public class BMIRecord {
@@ -6,7 +6,7 @@ public class BMIRecord {
 
 	private final int id;
 	private final GeneralUser user;
-	private final double bmi;
+	private double bmi;
 
 	public BMIRecord(GeneralUser user) {
 		this.id = ++counter;
@@ -32,6 +32,24 @@ public class BMIRecord {
 
 	public String getUserName() {
 		return user.name;
+	}
+	
+	public void setHeight(double height) {
+		this.user.height = height;
+		recalculateBMI();
+	}
+
+	public void setWeight(double weight) {
+		this.user.weight = weight;
+		recalculateBMI();
+	}
+
+	public void setUserName(String name) {
+		this.user.name = name;
+	}
+	
+	public void recalculateBMI() {
+		this.bmi = user.calculateBMI();
 	}
 }
 

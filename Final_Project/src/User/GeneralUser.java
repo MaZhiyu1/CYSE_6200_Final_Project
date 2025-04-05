@@ -1,4 +1,4 @@
-package User;
+package user;
 
 // 1) Class Definition
 // 3) Abstract Classes/Interfaces
@@ -16,6 +16,68 @@ public abstract class GeneralUser {
 		this.height = height;
 		this.weight = weight;
 	}
+	
+	
 
+	public String getName() {
+		return name;
+	}
+
+
+
+	public void setName(String name) {
+		this.name = name;
+	}
+
+
+
+	public int getAge() {
+		return age;
+	}
+
+
+
+	public void setAge(int age) {
+		this.age = age;
+	}
+
+
+
+	public String getGender() {
+		return gender;
+	}
+
+
+
+	public void setGender(String gender) {
+		this.gender = gender;
+	}
+
+
+
+	public double getHeight() {
+		return height;
+	}
+
+
+
+	public void setHeight(double height) {
+		this.height = height;
+	}
+
+
+
+	public double getWeight() {
+		return weight;
+	}
+
+
+
+	public void setWeight(double weight) {
+		this.weight = weight;
+	}
+
+
+    //Abstract method
 	public abstract double calculateBMI();
 }
