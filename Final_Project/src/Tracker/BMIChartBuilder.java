@@ -1,8 +1,9 @@
-package Tracker;
+package tracker;
 
 import javafx.scene.chart.*;
+import user.BMIRecord;
+
 import java.util.List;
-import User.BMIRecord;
 
 public class BMIChartBuilder {
 

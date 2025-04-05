@@ -1,16 +1,20 @@
-package Tracker;
+package tracker;
 
 import java.util.List;
 
-import User.BMIRecord;
-import User.GeneralUser;
+import user.BMIRecord;
+import user.GeneralUser;
 
 //3) Abstract Classes/Interfaces
-public interface ProgressTracker {
-	
-	// Log a full record (height and weight)
-	public void logRecord(GeneralUser user);
+// 4) Generics/Collections/Iterators
+public interface ProgressTracker<T> {
 
-	// Return full record history
-	List<BMIRecord> getRecordHistory();
+	/** Logs a new record from a user. **/
+	void logRecord(GeneralUser user);
+
+	/** Removes a specific record. **/
+	void removeRecord(T record);
+
+	/** Returns full record history. **/
+	List<T> getRecordHistory();
 }
