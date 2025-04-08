@@ -1,0 +1,38 @@
+BMI Tracker - Instructions for Use
+
+This is a JavaFX-based BMI Weight Tracker application developed using Java.
+
+How to Run:
+1. Open the project in Eclipse.
+2. Locate the Main class at: application/Main.java.
+3. Right-click Main.java and select "Run As > Java Application".
+
+How to Use the Application:
+
+1. Input Section:
+   - Enter the user's name, age, gender, height (in cm), and weight (in kg).
+   - Click "Calculate BMI" to view the BMI result below.
+   - If input is invalid or missing, an alert will appear.
+
+2. Add and View Records:
+   - After calculating, click "Add & Print Record" to save the current data.
+   - The saved record will appear in the table below.
+   - A line chart will update to show BMI trend changes over time.
+
+3. Edit Records:
+   - Select a record from the table.
+   - Click the "Edit" button.
+   - A dialog will appear where you can modify height and weight.
+   - After saving, the table and chart will refresh automatically.
+
+4. Delete Records:
+   - Select a record from the table.
+   - Click the "Delete" button to remove it.
+
+5. Data Handling:
+   - Records are stored in a stack structure.
+   - For display purposes, the stack is converted to a list.
+   - This keeps the logic separate from the UI.
+
+This application supports multiple entries, real-time updates, and user-friendly interactions.
+
