@@ -2,7 +2,6 @@ package tracker;
 
 import java.util.List;
 
-import user.BMIRecord;
 import user.GeneralUser;
 
 //3) Abstract Classes/Interfaces
