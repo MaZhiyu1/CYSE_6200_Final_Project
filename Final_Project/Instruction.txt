@@ -29,10 +29,5 @@ How to Use the Application:
    - Select a record from the table.
    - Click the "Delete" button to remove it.
 
-5. Data Handling:
-   - Records are stored in a stack structure.
-   - For display purposes, the stack is converted to a list.
-   - This keeps the logic separate from the UI.
-
 This application supports multiple entries, real-time updates, and user-friendly interactions.
 
