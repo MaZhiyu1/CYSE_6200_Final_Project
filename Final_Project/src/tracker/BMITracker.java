@@ -9,7 +9,7 @@ import user.GeneralUser;
 
 // 2) Inheritance/Polymorphism
 // 5) Lists
-// 6) Stacks
+// 6) Stacks: push remove TC: O(1)
 public class BMITracker implements ProgressTracker<BMIRecord> {
 	private final Stack<BMIRecord> recordHistory = new Stack<>();
 

@@ -12,12 +12,8 @@ import javafx.scene.control.*;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
-
-import tracker.BMIChartBuilder;
 import tracker.BMITracker;
 import user.BMIRecord;
-import user.User;
-
 import handler.CalculateBMIHandler;
 import handler.LogRecordHandler;
 import handler.EditRecordHandler;

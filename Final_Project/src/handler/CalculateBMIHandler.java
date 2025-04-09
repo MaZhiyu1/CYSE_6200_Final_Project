@@ -6,6 +6,7 @@ import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 
 //2) Inheritance/Polymorphism
+//The handler package manages button actions and user input events in the application.
 
 /** Handles BMI calculation when the button is clicked. **/
 public class CalculateBMIHandler implements EventHandler<ActionEvent> {
